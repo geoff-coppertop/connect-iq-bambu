@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<iq:manifest version="3" xmlns:iq="http://www.garmin.com/xml/connectiq">
+    <!--
+        Generated app id. Generate your own with `openssl rand -hex 16` if you
+        fork this into a separate app.
+    -->
+    <iq:application
+        entry="ConectiqBambuApp"
+        id="413f79b987ec05417a02de43d45972ea"
+        launcherIcon="@Drawables.LauncherIcon"
+        name="@Strings.AppName"
+        type="watch-app"
+        minApiLevel="3.1.0">
+        <iq:products>
+            <iq:product id="venux1"/>
+        </iq:products>
+        <iq:permissions/>
+        <iq:languages>
+            <iq:language>eng</iq:language>
+        </iq:languages>
+    </iq:application>
+</iq:manifest>

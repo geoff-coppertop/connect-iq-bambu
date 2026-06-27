@@ -1,0 +1,28 @@
+{
+    "name": "conectiq-bambu",
+    "image": "mcr.microsoft.com/devcontainers/base:debian",
+    "features": {
+        "ghcr.io/devcontainers/features/github-cli:1": {},
+        "ghcr.io/geoff-coppertop/devcontainer-features/shell-baseline:1": {},
+        "ghcr.io/geoff-coppertop/devcontainer-features/connect-iq-sdk:1": {
+            "version": "9.2.0"
+        }
+    },
+    // Garmin account credentials, needed to download device files and build.
+    // Export GARMIN_USERNAME / GARMIN_PASSWORD on the host (or set them as
+    // Codespaces/repo secrets) before opening the container. They are passed
+    // through to the container's shell and post-create step only; nothing is
+    // written to the image.
+    "remoteEnv": {
+        "GARMIN_USERNAME": "${localEnv:GARMIN_USERNAME}",
+        "GARMIN_PASSWORD": "${localEnv:GARMIN_PASSWORD}"
+    },
+    "postCreateCommand": "bash .devcontainer/post-create.sh",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "garmin.monkey-c"
+            ]
+        }
+    }
+}

@@ -1,0 +1,4 @@
+<resources>
+    <string id="AppName">Conectiq Bambu</string>
+    <string id="prompt">Hello Bambu!</string>
+</resources>
