@@ -6,3 +6,7 @@ developer_key.der
 developer_key.pem
 *.der
 *.pem
+
+# Claude Code: keep shared project config (settings.json, commands/,
+# agents/, skills/, hooks/) but ignore personal/per-developer overrides.
+.claude/settings.local.json

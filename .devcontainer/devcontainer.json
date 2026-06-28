@@ -1,12 +1,22 @@
 {
     "name": "conectiq-bambu",
     "image": "mcr.microsoft.com/devcontainers/base:debian",
+    // Create a user in the container matching the host username so file edits
+    // and git operations don't surface as authored by "vscode". common-utils
+    // creates the user if it doesn't already exist and the dev container CLI's
+    // updateRemoteUserUID (default: on) syncs the UID/GID to the host user's
+    // at container start.
+    "containerUser": "${localEnv:USER}",
     "features": {
+        "ghcr.io/devcontainers/features/common-utils:2": {
+            "username": "${localEnv:USER}"
+        },
         "ghcr.io/devcontainers/features/github-cli:1": {},
         "ghcr.io/geoff-coppertop/devcontainer-features/shell-baseline:1": {},
         "ghcr.io/geoff-coppertop/devcontainer-features/connect-iq-sdk:1": {
             "version": "9.2.0"
-        }
+        },
+        "ghcr.io/geoff-coppertop/devcontainer-features/claude-code:1": {}
     },
     // Garmin account credentials, needed to download device files and build.
     // Export GARMIN_USERNAME / GARMIN_PASSWORD on the host (or set them as
@@ -17,6 +27,18 @@
         "GARMIN_USERNAME": "${localEnv:GARMIN_USERNAME}",
         "GARMIN_PASSWORD": "${localEnv:GARMIN_PASSWORD}"
     },
+    // Persist Claude Code credentials and session memory across container
+    // rebuilds. The claude-code feature pre-creates ~/.claude with the right
+    // ownership so a fresh named volume initialises correctly.
+    "mounts": [
+        "source=claude-code-state,target=/home/${localEnv:USER}/.claude,type=volume"
+    ],
+    // Rootless Podman remaps the host user through a subuid range inside the
+    // container by default; --userns=keep-id maps host UID to the same UID in
+    // the container so bind-mounted workspace files stay writable by the
+    // container user. Docker rejects this flag -- collaborators on Docker need
+    // to remove it locally or use the equivalent --userns=host.
+    "runArgs": ["--userns=keep-id"],
     "postCreateCommand": "bash .devcontainer/post-create.sh",
     "customizations": {
         "vscode": {
