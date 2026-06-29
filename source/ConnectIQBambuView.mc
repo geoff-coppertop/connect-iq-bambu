@@ -2,7 +2,7 @@ import Toybox.Graphics;
 import Toybox.Lang;
 import Toybox.WatchUi;
 
-class ConectiqBambuView extends WatchUi.View {
+class ConnectIQBambuView extends WatchUi.View {
     function initialize() {
         View.initialize();
     }
