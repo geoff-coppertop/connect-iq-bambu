@@ -6,7 +6,8 @@
         "ghcr.io/geoff-coppertop/devcontainer-features/shell-baseline:1": {},
         "ghcr.io/geoff-coppertop/devcontainer-features/connect-iq-sdk:1": {
             "version": "9.2.0"
-        }
+        },
+        "ghcr.io/geoff-coppertop/devcontainer-features/claude-code:1": {}
     },
     // Garmin account credentials, needed to download device files and build.
     // Export GARMIN_USERNAME / GARMIN_PASSWORD on the host (or set them as
@@ -17,12 +18,27 @@
         "GARMIN_USERNAME": "${localEnv:GARMIN_USERNAME}",
         "GARMIN_PASSWORD": "${localEnv:GARMIN_PASSWORD}"
     },
+    // Persist Claude Code credentials and session memory across container
+    // rebuilds. The claude-code feature pre-creates /home/vscode/.claude with
+    // the right ownership so a fresh named volume initialises correctly.
+    "mounts": [
+        "source=claude-code-state,target=/home/vscode/.claude,type=volume"
+    ],
+    // Rootless Podman remaps the host user through a subuid range inside the
+    // container by default; --userns=keep-id maps host UID to the same UID in
+    // the container so bind-mounted workspace files stay writable. Docker
+    // rejects this flag -- collaborators on Docker need to remove it locally
+    // or use the equivalent --userns=host.
+    "runArgs": ["--userns=keep-id"],
     "postCreateCommand": "bash .devcontainer/post-create.sh",
     "customizations": {
         "vscode": {
             "extensions": [
                 "garmin.monkey-c"
-            ]
+            ],
+            "settings": {
+                "terminal.integrated.fontFamily": "DroidSansM Nerd Font Mono"
+            }
         }
     }
 }
