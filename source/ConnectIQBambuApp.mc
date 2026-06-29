@@ -2,7 +2,7 @@ import Toybox.Application;
 import Toybox.Lang;
 import Toybox.WatchUi;
 
-class ConectiqBambuApp extends Application.AppBase {
+class ConnectIQBambuApp extends Application.AppBase {
     function initialize() {
         AppBase.initialize();
     }
@@ -14,6 +14,6 @@ class ConectiqBambuApp extends Application.AppBase {
     }
 
     function getInitialView() as [Views] or [Views, InputDelegates] {
-        return [new ConectiqBambuView()];
+        return [new ConnectIQBambuView()];
     }
 }

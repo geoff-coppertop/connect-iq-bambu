@@ -1,4 +1,4 @@
-# conectiq-bambu
+# connect-iq-bambu
 
 A Garmin Connect IQ watch app, built in a devcontainer. Target device:
 **Venu X1** (`venux1`), Connect IQ SDK **9.2.0**.
@@ -10,7 +10,7 @@ manifest.xml          app id, type, target products, permissions
 monkey.jungle         build configuration
 source/               Monkey C source (App + View)
 resources/            strings, layout, launcher icon
-build.sh              compile to bin/conectiq-bambu.prg
+build.sh              compile to bin/connect-iq-bambu.prg
 .devcontainer/        devcontainer + post-create (SDK is from a shared feature)
 ```
 
@@ -48,7 +48,7 @@ secrets). `post-create.sh` uses them to log in and run
 ## Build
 
 ```sh
-./build.sh            # builds bin/conectiq-bambu.prg for venux1
+./build.sh            # builds bin/connect-iq-bambu.prg for venux1
 ./build.sh <device>   # build for another product id listed in manifest.xml
 ```
 

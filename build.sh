@@ -7,7 +7,7 @@ set -euo pipefail
 cd "$(dirname "$0")"
 
 DEVICE="${1:-venux1}"
-OUT="bin/conectiq-bambu.prg"
+OUT="bin/connect-iq-bambu.prg"
 
 if [ ! -f developer_key.der ]; then
     echo "developer_key.der missing — run .devcontainer/post-create.sh first." >&2

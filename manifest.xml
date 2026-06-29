@@ -5,7 +5,7 @@
         fork this into a separate app.
     -->
     <iq:application
-        entry="ConectiqBambuApp"
+        entry="ConnectIQBambuApp"
         id="413f79b987ec05417a02de43d45972ea"
         launcherIcon="@Drawables.LauncherIcon"
         name="@Strings.AppName"
