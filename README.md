@@ -16,13 +16,28 @@ build.sh              compile to bin/conectiq-bambu.prg
 
 ## Devcontainer
 
-The container is assembled from
-[`geoff-coppertop/devcontainer-features`](https://github.com/geoff-coppertop/devcontainer-features):
+The container is assembled from a mix of
+[official devcontainer features](https://github.com/devcontainers/features)
+and [`geoff-coppertop/devcontainer-features`](https://github.com/geoff-coppertop/devcontainer-features):
 
-- `shell-baseline` — shell tooling + shared fish/git dotfiles.
-- `connect-iq-sdk` (`version: 9.2.0`) — installs the JDK, the
+- `devcontainers/common-utils` (`username: ${localEnv:USER}`) — creates a
+  container user matching your host username so file edits and git commits
+  surface as authored by you, not `vscode`.
+- `devcontainers/github-cli` — `gh` on `PATH`.
+- `geoff-coppertop/shell-baseline` — shell tooling + shared fish/git dotfiles.
+- `geoff-coppertop/connect-iq-sdk` (`version: 9.2.0`) — installs the JDK, the
   `connect-iq-sdk-manager` CLI, and the Connect IQ SDK (anonymous download),
   and puts `monkeyc` on `PATH`.
+- `geoff-coppertop/claude-code` — Claude Code CLI (and, for VS Code users,
+  the Claude Code extension). A named volume `claude-code-state` is mounted
+  at `~/.claude` so credentials and session memory survive container rebuilds.
+
+### Podman caveat
+
+`runArgs: ["--userns=keep-id"]` is set so the rootless Podman user namespace
+preserves your host UID inside the container and bind-mounted workspace
+files stay writable. Docker rejects this flag — collaborators on Docker
+need to remove it locally (or use `--userns=host`).
 
 ### Garmin credentials are required
 
