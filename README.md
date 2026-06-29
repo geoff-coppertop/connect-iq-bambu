@@ -20,9 +20,6 @@ The container is assembled from a mix of
 [official devcontainer features](https://github.com/devcontainers/features)
 and [`geoff-coppertop/devcontainer-features`](https://github.com/geoff-coppertop/devcontainer-features):
 
-- `devcontainers/common-utils` (`username: ${localEnv:USER}`) — creates a
-  container user matching your host username so file edits and git commits
-  surface as authored by you, not `vscode`.
 - `devcontainers/github-cli` — `gh` on `PATH`.
 - `geoff-coppertop/shell-baseline` — shell tooling + shared fish/git dotfiles.
 - `geoff-coppertop/connect-iq-sdk` (`version: 9.2.0`) — installs the JDK, the
