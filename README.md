@@ -29,12 +29,25 @@ and [`geoff-coppertop/devcontainer-features`](https://github.com/geoff-coppertop
   the Claude Code extension). A named volume `claude-code-state` is mounted
   at `~/.claude` so credentials and session memory survive container rebuilds.
 
-### Podman caveat
+This `.devcontainer` is also the reference implementation for the
+[`connect-iq-app` devcontainer template](https://github.com/geoff-coppertop/devcontainer-features/tree/main/templates/connect-iq-app)
+— new Connect IQ repos can scaffold the same setup with
+`devcontainer templates apply`.
 
-`runArgs: ["--userns=keep-id"]` is set so the rootless Podman user namespace
-preserves your host UID inside the container and bind-mounted workspace
-files stay writable. Docker rejects this flag — collaborators on Docker
-need to remove it locally (or use `--userns=host`).
+### Container engine (Docker vs rootless Podman)
+
+`runArgs` passes `--userns=${localEnv:DEVCONTAINER_USERNS:host}`. Rootless
+Podman needs `--userns=keep-id` so bind-mounted workspace files keep your
+host UID; Docker rejects that flag. On Podman machines, set on the host:
+
+```sh
+export DEVCONTAINER_USERNS=keep-id
+```
+
+The shared fish config from
+[dotfiles](https://github.com/geoff-coppertop/dotfiles) sets this
+automatically when it detects Podman. Docker users need to do nothing — the
+variable defaults to `host`, Docker's normal behavior.
 
 ### Garmin credentials are required
 

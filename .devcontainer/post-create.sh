@@ -18,10 +18,22 @@ fi
 
 # --- Per-device compiler files (needs Garmin login) -------------------------
 if [ -n "${GARMIN_USERNAME:-}" ] && [ -n "${GARMIN_PASSWORD:-}" ]; then
-    echo "Logging in to Garmin and downloading device files for the manifest..."
-    connect-iq-sdk-manager login
-    connect-iq-sdk-manager device download --manifest manifest.xml
-    echo "Device files ready. Build with: ./build.sh"
+    if [ ! -f manifest.xml ]; then
+        cat >&2 <<'EOF'
+
+  manifest.xml not found, so device files were not downloaded. Add your
+  app's manifest, then run inside the container:
+
+      connect-iq-sdk-manager login
+      connect-iq-sdk-manager device download --manifest manifest.xml
+
+EOF
+    else
+        echo "Logging in to Garmin and downloading device files for the manifest..."
+        connect-iq-sdk-manager login
+        connect-iq-sdk-manager device download --manifest manifest.xml
+        echo "Device files ready. Build with: ./build.sh"
+    fi
 else
     cat >&2 <<'EOF'
 

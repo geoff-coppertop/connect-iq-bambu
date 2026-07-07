@@ -24,12 +24,13 @@
     "mounts": [
         "source=claude-code-state,target=/home/vscode/.claude,type=volume"
     ],
-    // Rootless Podman remaps the host user through a subuid range inside the
-    // container by default; --userns=keep-id maps host UID to the same UID in
-    // the container so bind-mounted workspace files stay writable. Docker
-    // rejects this flag -- collaborators on Docker need to remove it locally
-    // or use the equivalent --userns=host.
-    "runArgs": ["--userns=keep-id"],
+    // Rootless Podman needs --userns=keep-id so bind-mounted workspace files
+    // keep the host UID; Docker rejects that flag. The value comes from the
+    // host environment: export DEVCONTAINER_USERNS=keep-id on Podman machines
+    // (the shared fish config from dotfiles sets this automatically when it
+    // detects Podman). Unset, it falls back to "host", Docker's default
+    // behavior.
+    "runArgs": ["--userns=${localEnv:DEVCONTAINER_USERNS:host}"],
     "postCreateCommand": "bash .devcontainer/post-create.sh",
     "customizations": {
         "vscode": {
